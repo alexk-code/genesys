@@ -13,19 +13,22 @@ public class LoginPage {
     private WebDriverWait wait;
     private static final Logger LOGGER = LoggerFactory.getLogger(LoginPage.class);
 
-    // Locators
     private By usernameField = By.id("user-name");
     private By passwordField = By.id("password");
     private By loginButton = By.cssSelector("[data-test='login-button']");
     private By dismissibleErrorMessage = By.cssSelector("[data-test='error']");
 
-    // Constructor
     public LoginPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // Login Method
+    public LoginPage navigateToUrl(String url) {
+        LOGGER.info("Navigating to url: {}", url);
+        driver.get(url);
+        return this;
+    }
+
     public LoginPage login(String username, String password) {
         LOGGER.info("Attempting to log in with username: {}", username);
         wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField)).sendKeys(username);
@@ -35,7 +38,6 @@ public class LoginPage {
         return this;
     }
 
-    // Login Method
     public LoginPage enterCredentials(String username, String password) {
         LOGGER.info("Attempting to log in with username: {}", username);
         wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField)).sendKeys(username);
@@ -43,7 +45,6 @@ public class LoginPage {
         return this;
     }
 
-    // Login Method
     public LoginPage clickOnLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
         LOGGER.info("Login button clicked");

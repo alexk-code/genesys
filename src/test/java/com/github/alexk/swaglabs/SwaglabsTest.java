@@ -23,27 +23,25 @@ public class SwaglabsTest extends CoreTest {
 
     @Test
     public void testCompleteCheckout() {
-        driver.get(ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html");
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
         CartPage cartPage = new CartPage(driver);
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(driver);
 
-        LOGGER.info("Starting checkout test");
-        loginPage
-                .enterCredentials(ConfigReader.getProperty("user_performance.username"),
-                        ConfigReader.getProperty("user_performance.password"))
-                .clickOnLogin();
+        LOGGER.info("Starting complete checkout test");
+
+        String url = ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html";
+        String username = ConfigReader.getProperty("user_performance.username");
+        String password = ConfigReader.getProperty("user_performance.password");
+
+        loginPage.navigateToUrl(url).enterCredentials(username, password).clickOnLogin();
         assertTrue(inventoryPage.isLoaded(), "Inventory page not loaded properly!");
 
-        inventoryPage.addBackpackToCart()
-                .addFleeceJacketToCart()
-                .openCart();
+        inventoryPage.addBackpackToCart().addFleeceJacketToCart().openCart();
         assertTrue(cartPage.verifyItemsInCart(), "Cart verification failed!");
         cartPage.proceedToCheckout();
-        checkoutPage.enterUserDetails("Gene", "sys", "1111")
-                .completePurchase();
+        checkoutPage.enterUserDetails("Gene", "sys", "1111").completePurchase();
         assertTrue(checkoutCompletePage.verifyOrderSuccess());
         LOGGER.info("Checkout test completed successfully");
     }
@@ -55,6 +53,7 @@ public class SwaglabsTest extends CoreTest {
         InventoryPage inventoryPage = new InventoryPage(driver);
 
         LOGGER.info("Starting error messages test");
+
         loginPage.clickOnLogin();
         assertTrue(loginPage.verifyErrorMessage("Epic sadface: Username is required"),
                 "The expected error message is not found!");

@@ -13,10 +13,8 @@ public class CheckoutCompletePage {
     private WebDriverWait wait;
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutPage.class);
 
-    // Locators
     private By orderSuccessMessage = By.cssSelector("[data-test='complete-header']");
 
-    // Constructor
     public CheckoutCompletePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));

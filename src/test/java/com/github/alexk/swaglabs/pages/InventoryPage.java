@@ -20,7 +20,6 @@ public class InventoryPage {
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryPage.class);
     private final String TITLE = "Products";
 
-    // Locators
     private By backpack = By.cssSelector("[data-test='add-to-cart-sauce-labs-backpack']");
     private By fleeceJacket = By.cssSelector("[data-test='add-to-cart-sauce-labs-fleece-jacket']");
     private By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
@@ -28,13 +27,11 @@ public class InventoryPage {
     private By title = By.cssSelector("[data-test='title']");
     private By footer = By.cssSelector("div.footer_copy[data-test='footer-copy']");
 
-    // Constructor
     public InventoryPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // Methods
     public boolean verifyCartCount(String expectedCount) {
         String actualCount = wait.until(ExpectedConditions.visibilityOfElementLocated(cartBadge)).getText();
         LOGGER.info("Cart count: Expected = {}, Actual = {}", expectedCount, actualCount);

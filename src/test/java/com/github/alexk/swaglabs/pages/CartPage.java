@@ -13,18 +13,15 @@ public class CartPage {
     private WebDriverWait wait;
     private static final Logger LOGGER = LoggerFactory.getLogger(CartPage.class);
 
-    // Locators
     private By checkoutButton = By.cssSelector("[data-test='checkout']");
     private By backpackItem = By.xpath("//div[@data-test='inventory-item-name' and text()='Sauce Labs Backpack']");
     private By fleeceJacketItem = By.xpath("//div[@data-test='inventory-item-name' and text()='Sauce Labs Fleece Jacket']");
 
-    // Constructor
     public CartPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    // Methods
     public boolean verifyItemsInCart() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(backpackItem)).isDisplayed() &&
                wait.until(ExpectedConditions.visibilityOfElementLocated(fleeceJacketItem)).isDisplayed();

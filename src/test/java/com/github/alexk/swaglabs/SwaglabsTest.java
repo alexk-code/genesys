@@ -17,13 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Disabled;
 
-//@Disabled
+@Disabled
 public class SwaglabsTest extends CoreTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
 
     @Test
     public void testCompleteCheckout() {
-        //driver.get(ConfigReader.getExtendedBaseUrl("inventory.html"));
         driver.get(ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html");
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);
@@ -43,7 +42,7 @@ public class SwaglabsTest extends CoreTest {
                 .openCart();
         assertTrue(cartPage.verifyItemsInCart(), "Cart verification failed!");
         cartPage.proceedToCheckout();
-        checkoutPage.enterUserDetails("Gene", "Sys", "1111")
+        checkoutPage.enterUserDetails("Gene", "sys", "1111")
                 .completePurchase();
         assertTrue(checkoutCompletePage.verifyOrderSuccess());
         LOGGER.info("Checkout test completed successfully");
@@ -51,7 +50,6 @@ public class SwaglabsTest extends CoreTest {
 
     @Test
     public void testErrorMessages() {
-        //driver.get(ConfigReader.getExtendedBaseUrl("inventory.html"));
         driver.get(ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html");
         LoginPage loginPage = new LoginPage(driver);
         InventoryPage inventoryPage = new InventoryPage(driver);

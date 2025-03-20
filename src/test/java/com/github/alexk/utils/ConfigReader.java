@@ -9,6 +9,7 @@ import java.util.Properties;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.PageLoadStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,10 +94,79 @@ public class ConfigReader {
 
     public static boolean getHeadless() {
         String headless = getProperty("headless", "false");
-        boolean isHeadless = Boolean.parseBoolean(headless);
-        if (!headless.equalsIgnoreCase("true") && !headless.equalsIgnoreCase("false")) {
-            LOGGER.warn("Invalid value for '{}', defaulting to false.");
+
+        if (!"true".equalsIgnoreCase(headless) && !"false".equalsIgnoreCase(headless)) {
+            LOGGER.warn("Invalid value for 'headless': '{}', defaulting to false.", headless);
         }
-        return isHeadless;
+
+        return Boolean.parseBoolean(headless);
+    }
+
+    public static boolean getPerformanceProfile() {
+        String performanceProfile = getProperty("performance_profile", "false");
+
+        if (!"true".equalsIgnoreCase(performanceProfile) && !"false".equalsIgnoreCase(performanceProfile)) {
+            LOGGER.warn("Invalid value for 'performance_profile': '{}'. Defaulting to 'false'.", performanceProfile);
+            return false;
+        }
+
+        return Boolean.parseBoolean(performanceProfile);
+    }
+
+    public static PageLoadStrategy getPageLoadStrategy() {
+        String pageLoadStrategy = getProperty("page_load_strategy", "normal");
+
+        if (!"normal".equalsIgnoreCase(pageLoadStrategy) && !"eager".equalsIgnoreCase(pageLoadStrategy)
+                && !"none".equalsIgnoreCase(pageLoadStrategy)) {
+            LOGGER.warn("Invalid value for 'page_load_strategy': '{}'. Defaulting to 'normal'.", pageLoadStrategy);
+            return PageLoadStrategy.NORMAL;
+        }
+
+        switch (pageLoadStrategy.toUpperCase()) {
+            case "NORMAL":
+                return PageLoadStrategy.NORMAL;
+            case "EAGER":
+                return PageLoadStrategy.EAGER;
+            case "NONE":
+                return PageLoadStrategy.NONE;
+            default:
+                return PageLoadStrategy.NORMAL;
+        }
+    }
+
+    /*
+     * TODO: Do a spike. Once a ChromeDriver is initialized, you cannot modify its
+     * ChromeOptions directly, because the options are used at the time of
+     * initialization to configure the driver.
+     * Useing Chrome DevTools Protocol (CDP) for runtime changes is possible:
+     * 
+     * ChromeDevTools devTools = ((ChromeDriver) driver).getDevTools();
+     * devTools.createSession();
+     * 
+     * devTools.send(Network.enable());
+     * devTools.send(Network.setCacheDisabled(true));
+     */
+    public static void setHeadless(boolean isHeadless) {
+        String headless = isHeadless ? "true" : "false";
+
+        properties.setProperty("headless", headless);
+
+        LOGGER.info("'headless' property set to: '{}'", headless);
+    }
+
+    public static void setPerformanceProfile(boolean isPerformanceProfile) {
+        String performanceProfile = isPerformanceProfile ? "true" : "false";
+
+        properties.setProperty("headless", performanceProfile);
+
+        LOGGER.info("'headless' property set to: '{}'", performanceProfile);
+    }
+
+    public static void setPageLoadStrategy(PageLoadStrategy pageLoadStrategy) {
+        String strategy = pageLoadStrategy.name();
+
+        properties.setProperty("page_load_strategy", strategy);
+
+        LOGGER.info("'page_load_strategy' set to: '{}'", strategy);
     }
 }

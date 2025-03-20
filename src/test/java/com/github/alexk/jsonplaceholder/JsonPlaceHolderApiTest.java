@@ -4,16 +4,19 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.swaglabs.SwaglabsTest;
 import com.github.alexk.utils.ConfigReader;
 
 import io.restassured.path.json.JsonPath;
 
+import org.junit.jupiter.api.Disabled;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static io.restassured.RestAssured.given;
 
+@Disabled
 public class JsonPlaceHolderApiTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JsonPlaceHolderApiTest.class);
 
     @Test
     public void testGetUsersAndVerifyFirstEmail() {

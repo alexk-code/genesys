@@ -1,5 +1,6 @@
 package com.github.alexk;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,7 +16,7 @@ import com.github.alexk.utils.ConfigReader;
 public class WebDriverFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebDriverFactory.class);
-    
+
     public enum BrowserType {
         CHROME,
         FIREFOX,
@@ -62,31 +63,80 @@ public class WebDriverFactory {
 
     private static WebDriver createChromeDriver() {
         boolean isHeadless = ConfigReader.getHeadless();
+        boolean isPerformanceProfile = ConfigReader.getPerformanceProfile();
+        PageLoadStrategy pageLoadStrategy = ConfigReader.getPageLoadStrategy();
         ChromeOptions chromeOptions = new ChromeOptions();
+
         if (isHeadless) {
             chromeOptions.addArguments("--headless");
-            LOGGER.info("Running {} browser in headless mode", BrowserType.CHROME);
+            LOGGER.info("Headless mode mode of '{}' browser is active", BrowserType.CHROME);
         }
+
+        if (isPerformanceProfile) {
+            chromeOptions.addArguments("--disable-background-timer-throttling");
+            chromeOptions.addArguments("--disable-backgrounding-occluded-windows");
+            chromeOptions.addArguments("--disable-renderer-backgrounding");
+            chromeOptions.addArguments("--disable-extensions");
+            chromeOptions.addArguments("--no-sandbox");
+            chromeOptions.addArguments("--disable-dev-shm-usage");
+            LOGGER.info("Performance Profile mode of '{}' browser is active", BrowserType.CHROME);
+        }
+
+        chromeOptions.setPageLoadStrategy(pageLoadStrategy);
+        LOGGER.info("Page Load Strategy of '{}' browser is set to '{}'", BrowserType.CHROME, pageLoadStrategy.name());
+
         return new ChromeDriver(chromeOptions);
     }
-    
+
     private static WebDriver createFirefoxDriver() {
         boolean isHeadless = ConfigReader.getHeadless();
+        boolean isPerformanceProfile = ConfigReader.getPerformanceProfile();
+        PageLoadStrategy pageLoadStrategy = ConfigReader.getPageLoadStrategy();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
+
         if (isHeadless) {
             firefoxOptions.addArguments("--headless");
-            LOGGER.info("Running {} browser in headless mode", BrowserType.FIREFOX);
+            LOGGER.info("Headless mode mode of '{}' browser is active", BrowserType.FIREFOX);
         }
+
+        if (isPerformanceProfile) {
+            firefoxOptions.addPreference("dom.max_script_run_time", 0);
+            firefoxOptions.addPreference("browser.cache.disk.enable", false);
+            firefoxOptions.addPreference("browser.cache.memory.enable", false);
+            firefoxOptions.addPreference("browser.tabs.remote.autostart", false);
+            LOGGER.info("Performance Profile mode of '{}' browser is active", BrowserType.FIREFOX);
+        }
+
+        firefoxOptions.setPageLoadStrategy(pageLoadStrategy);
+        LOGGER.info("Page Load Strategy of '{}' browser is set to '{}'", BrowserType.CHROME, pageLoadStrategy.name());
+
         return new FirefoxDriver(firefoxOptions);
     }
-    
+
     private static WebDriver createEdgeDriver() {
         boolean isHeadless = ConfigReader.getHeadless();
+        boolean isPerformanceProfile = ConfigReader.getPerformanceProfile();
+        PageLoadStrategy pageLoadStrategy = ConfigReader.getPageLoadStrategy();
         EdgeOptions edgeOptions = new EdgeOptions();
+
         if (isHeadless) {
             edgeOptions.addArguments("--headless");
-            LOGGER.info("Running {} browser in headless mode", BrowserType.EDGE);
+            LOGGER.info("Headless mode mode of '{}' browser is active", BrowserType.EDGE);
         }
+
+        if (isPerformanceProfile) {
+            edgeOptions.addArguments("--disable-background-timer-throttling");
+            edgeOptions.addArguments("--disable-backgrounding-occluded-windows");
+            edgeOptions.addArguments("--disable-renderer-backgrounding");
+            edgeOptions.addArguments("--disable-extensions");
+            edgeOptions.addArguments("--no-sandbox");
+            edgeOptions.addArguments("--disable-dev-shm-usage");
+            LOGGER.info("Performance Profile mode of '{}' browser is active", BrowserType.EDGE);
+        }
+
+        edgeOptions.setPageLoadStrategy(pageLoadStrategy);
+        LOGGER.info("Page Load Strategy of '{}' browser is set to '{}'", BrowserType.CHROME, pageLoadStrategy.name());
+
         return new EdgeDriver(edgeOptions);
     }
 }

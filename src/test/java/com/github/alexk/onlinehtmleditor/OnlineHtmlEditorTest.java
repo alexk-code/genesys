@@ -11,7 +11,7 @@ import com.github.alexk.utils.ConfigReader;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Disabled
+//@Disabled
 public class OnlineHtmlEditorTest extends CoreTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OnlineHtmlEditorTest.class);
 

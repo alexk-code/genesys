@@ -1,5 +1,9 @@
 package com.github.alexk.jsonplaceholder;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static io.restassured.RestAssured.given;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,13 +12,7 @@ import com.github.alexk.utils.ConfigReader;
 
 import io.restassured.path.json.JsonPath;
 
-import org.junit.jupiter.api.Disabled;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import static io.restassured.RestAssured.given;
-
-@Disabled
+//@Disabled
 public class JsonPlaceHolderApiTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonPlaceHolderApiTest.class);
 

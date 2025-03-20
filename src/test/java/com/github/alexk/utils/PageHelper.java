@@ -1,13 +1,12 @@
 package com.github.alexk.utils;
 
-import java.time.Duration;
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.Duration;
 
 public class PageHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(PageHelper.class);

@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Disabled;
 
-@Disabled
+//@Disabled
 public class SwaglabsTest extends CoreTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
 

@@ -5,19 +5,18 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Duration;
+import com.github.alexk.BasePage;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InventoryPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class InventoryPage extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(InventoryPage.class);
+
     private final String TITLE = "Products";
 
     private By backpack = By.cssSelector("[data-test='add-to-cart-sauce-labs-backpack']");
@@ -28,8 +27,7 @@ public class InventoryPage {
     private By footer = By.cssSelector("div.footer_copy[data-test='footer-copy']");
 
     public InventoryPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
     public boolean verifyCartCount(String expectedCount) {
@@ -81,19 +79,19 @@ public class InventoryPage {
     }
 
     public InventoryPage addBackpackToCart() {
-        LOGGER.info("Adding backpack to cart");
+        LOGGER.info("Add backpack to cart");
         wait.until(ExpectedConditions.elementToBeClickable(backpack)).click();
         return this;
     }
 
     public InventoryPage addFleeceJacketToCart() {
-        LOGGER.info("Adding fleece jacket to cart");
+        LOGGER.info("Add fleece jacket to cart");
         wait.until(ExpectedConditions.elementToBeClickable(fleeceJacket)).click();
         return this;
     }
 
     public InventoryPage openCart() {
-        LOGGER.info("Opening shopping cart");
+        LOGGER.info("Open shopping cart");
         wait.until(ExpectedConditions.elementToBeClickable(cartLink)).click();
         return this;
     }

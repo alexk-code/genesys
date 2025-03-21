@@ -5,11 +5,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Duration;
 import java.util.Properties;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.PageLoadStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,10 @@ public class ConfigReader {
     private static Properties properties = new Properties();
     private static final String PROPERTIES_FILE_PATH = "src/test/resources/config.properties";
     private static final String JSON_FILE_PATH = "src/test/resources/credentials.json";
+    private static final String DEFAULT_PAGE_LOAD_STRATEGY = "NORMAL";
+    private static final int DEFAULT_TIMEOUT = 10;
+    private static final int DEFAULT_WIDTH = 1920;
+    private static final int DEFAULT_HEIGHT = 1080;
 
     static {
         loadProperties();
@@ -29,8 +35,8 @@ public class ConfigReader {
         try (FileInputStream file = new FileInputStream(PROPERTIES_FILE_PATH)) {
             properties.load(file);
         } catch (IOException e) {
-            LOGGER.error("Could not load config.properties file!", e);
-            throw new RuntimeException("Could not load config.properties file!", e);
+            LOGGER.error("Could not load config.properties file", e);
+            throw new RuntimeException("Could not load config.properties file", e);
         }
     }
 
@@ -52,15 +58,15 @@ public class ConfigReader {
             }
             LOGGER.info("Successfully loaded JSON properties from " + JSON_FILE_PATH);
         } catch (IOException | ParseException e) {
-            LOGGER.error("Could not load credentials.json file!", e);
-            throw new RuntimeException("Could not load credentials.json file!", e);
+            LOGGER.error("Could not load credentials.json file", e);
+            throw new RuntimeException("Could not load credentials.json file", e);
         }
     }
 
     public static String getProperty(String key) {
         String value = properties.getProperty(key);
         if (value == null) {
-            LOGGER.warn("Property key '{}' is missing in the configuration.", key);
+            LOGGER.warn("Property key '{}' is missing in the configuration", key);
         }
         return value;
     }
@@ -68,7 +74,7 @@ public class ConfigReader {
     public static String getProperty(String key, String defaultValue) {
         String value = properties.getProperty(key, defaultValue);
         if (value == null) {
-            LOGGER.warn("Property key '{}' is missing in the configuration, defaulting to '{}'.", key, defaultValue);
+            LOGGER.warn("Property key '{}' is missing in the configuration, defaulting to '{}'", key, defaultValue);
             return defaultValue;
         }
         return value;
@@ -81,7 +87,7 @@ public class ConfigReader {
     public static String getExtendedBaseUrl(String extendedPath) {
         String baseUrl = getBaseUrl();
         if (baseUrl == null || baseUrl.trim().isEmpty()) {
-            throw new IllegalArgumentException("Base URL is not configured properly.");
+            throw new IllegalArgumentException("Base URL is not configured properly");
         }
 
         try {
@@ -97,7 +103,7 @@ public class ConfigReader {
         String headless = getProperty("headless", "false");
 
         if (!"true".equalsIgnoreCase(headless) && !"false".equalsIgnoreCase(headless)) {
-            LOGGER.warn("Invalid value for 'headless': '{}', defaulting to false.", headless);
+            LOGGER.warn("Invalid value for 'headless': '{}', set to default: 'false'", headless);
         }
 
         return Boolean.parseBoolean(headless);
@@ -107,7 +113,7 @@ public class ConfigReader {
         String performanceProfile = getProperty("performance_profile", "false");
 
         if (!"true".equalsIgnoreCase(performanceProfile) && !"false".equalsIgnoreCase(performanceProfile)) {
-            LOGGER.warn("Invalid value for 'performance_profile': '{}'. Defaulting to 'false'.", performanceProfile);
+            LOGGER.warn("Invalid value for 'performance_profile': '{}', set to default: 'false'", performanceProfile);
             return false;
         }
 
@@ -115,11 +121,11 @@ public class ConfigReader {
     }
 
     public static PageLoadStrategy getPageLoadStrategy() {
-        String pageLoadStrategy = getProperty("page_load_strategy", "normal");
+        String pageLoadStrategy = getProperty("page_load_strategy", DEFAULT_PAGE_LOAD_STRATEGY);
 
         if (!"normal".equalsIgnoreCase(pageLoadStrategy) && !"eager".equalsIgnoreCase(pageLoadStrategy)
                 && !"none".equalsIgnoreCase(pageLoadStrategy)) {
-            LOGGER.warn("Invalid value for 'page_load_strategy': '{}'. Defaulting to 'normal'.", pageLoadStrategy);
+            LOGGER.warn("Invalid value for 'page_load_strategy': '{}', set to default: '{}'", pageLoadStrategy, DEFAULT_PAGE_LOAD_STRATEGY);
             return PageLoadStrategy.NORMAL;
         }
 
@@ -132,6 +138,32 @@ public class ConfigReader {
                 return PageLoadStrategy.NONE;
             default:
                 return PageLoadStrategy.NORMAL;
+        }
+    }
+
+    public static Duration getWebDriverWaitTimeout() {
+        String timeout = properties.getProperty("webdriver_wait_timeout", String.valueOf(DEFAULT_TIMEOUT));
+
+        try {
+            return Duration.ofSeconds(Long.parseLong(timeout));
+        } catch (NumberFormatException e) {
+            LOGGER.warn("Invalid 'webdriver_wait_timeout' value: '{}', set to default: '{}' seconds", timeout, DEFAULT_TIMEOUT);
+            return Duration.ofSeconds(10);
+        }
+    }
+
+    public static Dimension getWindowDimension() {
+        String width = properties.getProperty("window_width", String.valueOf(DEFAULT_WIDTH));
+        String height = properties.getProperty("window_height", String.valueOf(DEFAULT_HEIGHT));
+
+        try {
+            int w = Integer.parseInt(width);
+            int h = Integer.parseInt(height);
+            return new Dimension(w, h);
+        } catch (NumberFormatException e) {
+            LOGGER.warn("Invalid 'width' and/or 'height' values: '{}x{}', set to default: '{}x{}'", width, height,
+                    DEFAULT_WIDTH, DEFAULT_HEIGHT);
+            return new Dimension(DEFAULT_WIDTH, DEFAULT_HEIGHT);
         }
     }
 

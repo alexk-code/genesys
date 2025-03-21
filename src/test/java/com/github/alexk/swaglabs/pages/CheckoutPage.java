@@ -3,32 +3,26 @@ package com.github.alexk.swaglabs.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.time.Duration;
+import com.github.alexk.BasePage;
 
-public class CheckoutPage {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class CheckoutPage  extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutPage.class);
 
-    // Locators
     private By firstNameField = By.cssSelector("[data-test='firstName']");
     private By lastNameField = By.cssSelector("[data-test='lastName']");
     private By postalCodeField = By.cssSelector("[data-test='postalCode']");
     private By continueButton = By.cssSelector("[data-test='continue']");
     private By finishButton = By.cssSelector("[data-test='finish']");
 
-    // Constructor
     public CheckoutPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
-    // Methods
     public CheckoutPage enterUserDetails(String firstName, String lastName, String postalCode) {
+        LOGGER.info("Enter user credentials");
         wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameField)).sendKeys(firstName);
         driver.findElement(lastNameField).sendKeys(lastName);
         driver.findElement(postalCodeField).sendKeys(postalCode);
@@ -37,8 +31,8 @@ public class CheckoutPage {
     }
 
     public CheckoutPage completePurchase() {
+        LOGGER.info("Click continue button");
         wait.until(ExpectedConditions.elementToBeClickable(finishButton)).click();
-        LOGGER.info("Continue button clicked");
         return this;
     }
 }

@@ -7,17 +7,13 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.alexk.BasePage;
 import com.github.alexk.utils.PageHelper;
 
-import java.time.Duration;
-
-public class DemoGuru99Page {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class DemoGuru99Page extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoGuru99Page.class);
 
     private By iframeWarningTextLocator = By
@@ -32,8 +28,7 @@ public class DemoGuru99Page {
     private String windowHandle;
 
     public DemoGuru99Page(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
     public DemoGuru99Page navigateTo(String url) {

@@ -5,20 +5,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.Duration;
 
 import org.junit.jupiter.api.Test;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.CoreTest;
+import com.github.alexk.BaseTest;
 import com.github.alexk.demoguru99.pages.DemoGuru99Page;
 import com.github.alexk.utils.PageHelper;
 
-//@Disabled
-public class DemoGuru99Test extends CoreTest {
+public class DemoGuru99Test extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoGuru99Test.class);
 
-    private String testEmail = "test@genesys.com";
-    private String expectedAlertText = "Successfully";
+    private final String TEST_EMAIL = "test@genesys.com";
+    private final String EXPECTED_ALERT_TEXT = "Successfully";
 
     @Test
     public void testTextFormatting() {
@@ -33,11 +31,11 @@ public class DemoGuru99Test extends CoreTest {
         demoGuru99Page.navigateTo(url);
         LOGGER.info("Page was loaded in {}", PageHelper.getFormattedPageLoadTime(driver));
 
-        demoGuru99Page.findIFrameAndClick().switchToNewTab().closeTab().switchToOriginalTab().enterEmail(testEmail)
+        demoGuru99Page.findIFrameAndClick().switchToNewTab().closeTab().switchToOriginalTab().enterEmail(TEST_EMAIL)
                 .clickOnSubmit();
 
-        assertTrue(demoGuru99Page.verifyAlert(expectedAlertText),
-                String.format("Alert message does NOT contain '%s'", expectedAlertText));
+        assertTrue(demoGuru99Page.verifyAlert(EXPECTED_ALERT_TEXT),
+                String.format("Alert message does NOT contain '%s'", EXPECTED_ALERT_TEXT));
         
         demoGuru99Page.navigateToTooltip();
 

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.CoreTest;
+import com.github.alexk.BaseTest;
 import com.github.alexk.swaglabs.pages.CartPage;
 import com.github.alexk.swaglabs.pages.CheckoutCompletePage;
 import com.github.alexk.swaglabs.pages.CheckoutPage;
@@ -15,10 +15,7 @@ import com.github.alexk.utils.PageHelper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Disabled;
-
-//@Disabled
-public class SwaglabsTest extends CoreTest {
+public class SwaglabsTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
 
     @Test

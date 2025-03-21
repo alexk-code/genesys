@@ -1,18 +1,16 @@
 package com.github.alexk.onlinehtmleditor;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.CoreTest;
+import com.github.alexk.BaseTest;
 import com.github.alexk.onlinehtmleditor.pages.OnlineHtmlEditorPage;
 import com.github.alexk.utils.ConfigReader;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//@Disabled
-public class OnlineHtmlEditorTest extends CoreTest {
+public class OnlineHtmlEditorTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OnlineHtmlEditorTest.class);
 
     @Test

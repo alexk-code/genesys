@@ -1,15 +1,15 @@
-package com.github.alexk.swaglabs;
+package com.github.alexk.tests.ui;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BaseTest;
-import com.github.alexk.swaglabs.pages.CartPage;
-import com.github.alexk.swaglabs.pages.CheckoutCompletePage;
-import com.github.alexk.swaglabs.pages.CheckoutPage;
-import com.github.alexk.swaglabs.pages.InventoryPage;
-import com.github.alexk.swaglabs.pages.LoginPage;
+import com.github.alexk.base.BaseTest;
+import com.github.alexk.pages.swaglabs.CartPage;
+import com.github.alexk.pages.swaglabs.CheckoutCompletePage;
+import com.github.alexk.pages.swaglabs.CheckoutPage;
+import com.github.alexk.pages.swaglabs.InventoryPage;
+import com.github.alexk.pages.swaglabs.LoginPage;
 import com.github.alexk.utils.ConfigReader;
 import com.github.alexk.utils.DriverHelper;
 import com.github.alexk.utils.TestHelper;

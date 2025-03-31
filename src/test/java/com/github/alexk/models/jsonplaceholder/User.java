@@ -1,4 +1,4 @@
-package com.github.alexk.jsonplaceholder.models;
+package com.github.alexk.models.jsonplaceholder;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

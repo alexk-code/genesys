@@ -1,4 +1,4 @@
-package com.github.alexk.swaglabs.pages;
+package com.github.alexk.pages.swaglabs;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BasePage;
+import com.github.alexk.base.BasePage;
 
 import java.util.Arrays;
 import java.util.List;

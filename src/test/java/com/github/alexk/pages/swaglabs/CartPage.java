@@ -1,4 +1,4 @@
-package com.github.alexk.swaglabs.pages;
+package com.github.alexk.pages.swaglabs;
 
 import java.util.Arrays;
 
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BasePage;
+import com.github.alexk.base.BasePage;
 
 public class CartPage extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(CartPage.class);

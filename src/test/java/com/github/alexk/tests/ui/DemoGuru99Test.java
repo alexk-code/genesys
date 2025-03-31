@@ -1,4 +1,4 @@
-package com.github.alexk.demoguru99;
+package com.github.alexk.tests.ui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BaseTest;
-import com.github.alexk.demoguru99.pages.DemoGuru99Page;
+import com.github.alexk.base.BaseTest;
+import com.github.alexk.pages.demoguru99.DemoGuru99Page;
 import com.github.alexk.utils.DriverHelper;
 
 //@Disabled

@@ -1,4 +1,4 @@
-package com.github.alexk.onlinehtmleditor.pages;
+package com.github.alexk.pages.onlinehtmleditor;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BasePage;
+import com.github.alexk.base.BasePage;
 import com.github.alexk.utils.ConfigReader;
 
 public class OnlineHtmlEditorPage extends BasePage {

@@ -1,4 +1,4 @@
-package com.github.alexk.jsonplaceholder.apis;
+package com.github.alexk.apis.jsonplaceholder;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.alexk.jsonplaceholder.models.User;
+import com.github.alexk.models.jsonplaceholder.User;
 
 public class JsonPlaceholderUserService {
     private static final OkHttpClient client = new OkHttpClient();

@@ -1,4 +1,4 @@
-package com.github.alexk.jsonplaceholder;
+package com.github.alexk.tests.api;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.jsonplaceholder.apis.JsonPlaceholderUserService;
+import com.github.alexk.apis.jsonplaceholder.JsonPlaceholderUserService;
 import com.github.alexk.utils.ConfigReader;
 
 public class JsonPlaceholderUserTest {

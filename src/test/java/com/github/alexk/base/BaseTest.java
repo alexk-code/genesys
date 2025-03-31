@@ -1,4 +1,4 @@
-package com.github.alexk;
+package com.github.alexk.base;
 
 import java.time.Duration;
 

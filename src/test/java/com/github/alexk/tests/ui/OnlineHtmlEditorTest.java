@@ -1,11 +1,11 @@
-package com.github.alexk.onlinehtmleditor;
+package com.github.alexk.tests.ui;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.github.alexk.BaseTest;
-import com.github.alexk.onlinehtmleditor.pages.OnlineHtmlEditorPage;
+import com.github.alexk.base.BaseTest;
+import com.github.alexk.pages.onlinehtmleditor.OnlineHtmlEditorPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -13,7 +13,6 @@ public class User {
     private String website;
     private Company company;
 
-    // Getters and Setters
     public int getId() {
         return id;
     }

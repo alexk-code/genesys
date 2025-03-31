@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import okhttp3.ResponseBody;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//@Disabled
 public class OkHttpJsonPlaceholderApiTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OkHttpJsonPlaceholderApiTest.class);
     private static final OkHttpClient client = new OkHttpClient();

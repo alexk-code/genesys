@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 
-public class PageHelper {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PageHelper.class);
+public class DriverHelper {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DriverHelper.class);
 
     public static void scrollToBottom(WebDriver driver) {
         JavascriptExecutor js = (JavascriptExecutor) driver;

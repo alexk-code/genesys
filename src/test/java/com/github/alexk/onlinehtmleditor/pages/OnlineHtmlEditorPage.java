@@ -4,21 +4,26 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.alexk.BasePage;
+import com.github.alexk.utils.ConfigReader;
 
 public class OnlineHtmlEditorPage extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(OnlineHtmlEditorPage.class);
 
-    private By textEditor = By.cssSelector("[aria-label='Rich Text Editor. Editing area: main. Press Alt+0 for help.']");
+    private By textEditor = By
+            .cssSelector("[aria-label='Rich Text Editor. Editing area: main. Press Alt+0 for help.']");
 
-    public OnlineHtmlEditorPage(WebDriver driver) {
-        super(driver);
+    public OnlineHtmlEditorPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
     }
 
-    public OnlineHtmlEditorPage navigateToUrl(String url) {
+    public OnlineHtmlEditorPage navigateTo() {
+        String url = ConfigReader.getProperty("onlinehtmleditor_baseurl");
+
         LOGGER.info("Navigate to url: {}", url);
         driver.get(url);
         return this;

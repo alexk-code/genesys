@@ -1,4 +1,4 @@
-package com.github.alexk;
+package com.github.alexk.utils;
 
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +10,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.github.alexk.utils.ConfigReader;
 
 public class WebDriverFactory {
 
@@ -41,7 +39,7 @@ public class WebDriverFactory {
         BrowserType browserType = getBrowserTypeFromConfig();
         WebDriver driver = null;
 
-        LOGGER.info("Creating WebDriver for browser: {}", browserType);
+        LOGGER.debug("Creating WebDriver for browser: {}", browserType);
 
         switch (browserType) {
             case CHROME:
@@ -69,7 +67,7 @@ public class WebDriverFactory {
 
         if (isHeadless) {
             chromeOptions.addArguments("--headless");
-            LOGGER.info("Headless mode mode of '{}' browser is active", BrowserType.CHROME);
+            LOGGER.debug("Headless mode mode of '{}' browser is active", BrowserType.CHROME);
         }
 
         if (isPerformanceProfile) {
@@ -79,11 +77,11 @@ public class WebDriverFactory {
             chromeOptions.addArguments("--disable-extensions");
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
-            LOGGER.info("Performance Profile mode of '{}' browser is active", BrowserType.CHROME);
+            LOGGER.debug("Performance Profile mode of '{}' browser is active", BrowserType.CHROME);
         }
 
         chromeOptions.setPageLoadStrategy(pageLoadStrategy);
-        LOGGER.info("Page Load Strategy of '{}' browser is set to '{}'", BrowserType.CHROME, pageLoadStrategy.name());
+        LOGGER.debug("Page Load Strategy of '{}' browser is set to '{}'", BrowserType.CHROME, pageLoadStrategy.name());
 
         return new ChromeDriver(chromeOptions);
     }

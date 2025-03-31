@@ -3,6 +3,7 @@ package com.github.alexk.swaglabs.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,8 @@ public class CheckoutPage  extends BasePage {
     private By continueButton = By.cssSelector("[data-test='continue']");
     private By finishButton = By.cssSelector("[data-test='finish']");
 
-    public CheckoutPage(WebDriver driver) {
-        super(driver);
+    public CheckoutPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
     }
 
     public CheckoutPage enterUserDetails(String firstName, String lastName, String postalCode) {
@@ -30,9 +31,9 @@ public class CheckoutPage  extends BasePage {
         return this;
     }
 
-    public CheckoutPage completePurchase() {
+    public CheckoutCompletePage completePurchase() {
         LOGGER.info("Click continue button");
         wait.until(ExpectedConditions.elementToBeClickable(finishButton)).click();
-        return this;
+        return new CheckoutCompletePage(driver, wait);
     }
 }

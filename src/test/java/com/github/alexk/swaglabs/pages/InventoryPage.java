@@ -5,6 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +20,13 @@ public class InventoryPage extends BasePage {
 
     private final String TITLE = "Products";
 
-    private By backpack = By.cssSelector("[data-test='add-to-cart-sauce-labs-backpack']");
-    private By fleeceJacket = By.cssSelector("[data-test='add-to-cart-sauce-labs-fleece-jacket']");
     private By cartBadge = By.cssSelector("[data-test='shopping-cart-badge']");
     private By cartLink = By.cssSelector("[data-test='shopping-cart-link']");
     private By title = By.cssSelector("[data-test='title']");
-    private By footer = By.cssSelector("div.footer_copy[data-test='footer-copy']");
+    private By footer = By.cssSelector("[data-test='footer-copy']");
 
-    public InventoryPage(WebDriver driver) {
-        super(driver);
+    public InventoryPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
     }
 
     public boolean verifyCartCount(String expectedCount) {
@@ -78,21 +77,38 @@ public class InventoryPage extends BasePage {
         return TITLE.equals(titleText);
     }
 
-    public InventoryPage addBackpackToCart() {
-        LOGGER.info("Add backpack to cart");
-        wait.until(ExpectedConditions.elementToBeClickable(backpack)).click();
+    public InventoryPage addItemToCart(String itemName) {
+        if (itemName == null || itemName.trim().isEmpty()) {
+            LOGGER.warn("Item name is invalid: {}", itemName);
+            return this;
+        }
+
+        By item = By.cssSelector(getItemSelector(itemName));
+        wait.until(ExpectedConditions.elementToBeClickable(item)).click();
         return this;
     }
 
-    public InventoryPage addFleeceJacketToCart() {
-        LOGGER.info("Add fleece jacket to cart");
-        wait.until(ExpectedConditions.elementToBeClickable(fleeceJacket)).click();
+    public InventoryPage addItemsToCart(String... itemNames) {
+        for (String itemName : itemNames) {
+            addItemToCart(itemName);
+        }
         return this;
     }
 
-    public InventoryPage openCart() {
+    public CartPage openCart() {
         LOGGER.info("Open shopping cart");
         wait.until(ExpectedConditions.elementToBeClickable(cartLink)).click();
-        return this;
+        return new CartPage(driver, wait);
+    }
+
+    private String getItemSelector(String itemName) {
+        return String.format("[data-test='add-to-cart-%s']", itemAsAttribute(itemName));
+    }
+
+    
+    private String itemAsAttribute(String itemName) {
+        return itemName.trim()
+                .toLowerCase()
+                .replaceAll("\\s+", "-");
     }
 }

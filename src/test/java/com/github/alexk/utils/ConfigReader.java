@@ -56,7 +56,7 @@ public class ConfigReader {
                     properties.setProperty(compositeKey, cred);
                 }
             }
-            LOGGER.info("Successfully loaded JSON properties from " + JSON_FILE_PATH);
+            LOGGER.debug("Successfully loaded JSON properties from " + JSON_FILE_PATH);
         } catch (IOException | ParseException e) {
             LOGGER.error("Could not load credentials.json file", e);
             throw new RuntimeException("Could not load credentials.json file", e);

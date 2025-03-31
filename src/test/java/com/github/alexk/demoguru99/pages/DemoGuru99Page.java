@@ -7,11 +7,12 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.alexk.BasePage;
-import com.github.alexk.utils.PageHelper;
+import com.github.alexk.utils.DriverHelper;
 
 public class DemoGuru99Page extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoGuru99Page.class);
@@ -27,8 +28,8 @@ public class DemoGuru99Page extends BasePage {
 
     private String windowHandle;
 
-    public DemoGuru99Page(WebDriver driver) {
-        super(driver);
+    public DemoGuru99Page(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
     }
 
     public DemoGuru99Page navigateTo(String url) {
@@ -51,7 +52,7 @@ public class DemoGuru99Page extends BasePage {
         WebElement iFrameWarningElement = wait
                 .until(ExpectedConditions.visibilityOfElementLocated(iframeWarningTextLocator));
         LOGGER.info("Scroll to iFrame warning");
-        PageHelper.scrollToWebElement(driver, iFrameWarningElement);
+        DriverHelper.scrollToWebElement(driver, iFrameWarningElement);
         LOGGER.info("Find iFrame below iFrame warning");
         WebElement iframeElement = iFrameWarningElement.findElement(By.xpath("following-sibling::iframe"));
         driver.switchTo().frame(iframeElement);

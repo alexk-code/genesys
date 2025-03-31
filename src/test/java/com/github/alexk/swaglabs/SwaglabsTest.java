@@ -11,54 +11,66 @@ import com.github.alexk.swaglabs.pages.CheckoutPage;
 import com.github.alexk.swaglabs.pages.InventoryPage;
 import com.github.alexk.swaglabs.pages.LoginPage;
 import com.github.alexk.utils.ConfigReader;
-import com.github.alexk.utils.PageHelper;
+import com.github.alexk.utils.DriverHelper;
+import com.github.alexk.utils.TestHelper;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Disabled;
+
+//@Disabled
 public class SwaglabsTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
 
+    private final String BACKPACK_ITEM = "Sauce Labs Backpack";
+    private final String FLEECE_JACKET_ITEM = "Sauce Labs Fleece Jacket";
+
     @Test
     public void testCompleteCheckout() {
-        LoginPage loginPage = new LoginPage(driver);
-        InventoryPage inventoryPage = new InventoryPage(driver);
-        CartPage cartPage = new CartPage(driver);
-        CheckoutPage checkoutPage = new CheckoutPage(driver);
-        CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage(driver);
+        String testName = "Complete Checkout Test";
+        TestHelper.testInfo(true, testName);
 
-        LOGGER.info("Starting complete checkout test");
-
-        String url = ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html";
+        LoginPage loginPage = new LoginPage(getDriver(), getWait());
+        
         String username = ConfigReader.getProperty("user_performance.username");
         String password = ConfigReader.getProperty("user_performance.password");
 
-        loginPage.navigateToUrl(url).enterCredentials(username, password).clickOnLogin();
+        InventoryPage inventoryPage = loginPage.navigateTo().loginAs(username, password);
         assertTrue(inventoryPage.isLoaded(), "Inventory page not loaded properly!");
 
-        inventoryPage.addBackpackToCart().addFleeceJacketToCart().openCart();
-        assertTrue(cartPage.verifyItemsInCart(), "Cart verification failed!");
-        cartPage.proceedToCheckout();
-        checkoutPage.enterUserDetails("Gene", "sys", "1111").completePurchase();
+        inventoryPage.addItemsToCart(BACKPACK_ITEM, FLEECE_JACKET_ITEM);
+        assertTrue(inventoryPage.verifyCartCount("2"), "Cart count verification failed!");
+
+        CartPage cartPage = inventoryPage.openCart();
+        assertTrue(cartPage.verifyItemsInCart(BACKPACK_ITEM, FLEECE_JACKET_ITEM), "Items in cart verification failed!");
+
+        CheckoutPage checkoutPage = cartPage.proceedToCheckout();
+        
+        CheckoutCompletePage checkoutCompletePage = checkoutPage.enterUserDetails("Gene", "sys", "1111").completePurchase();
         assertTrue(checkoutCompletePage.verifyOrderSuccess());
-        LOGGER.info("Checkout test completed successfully");
+        
+        TestHelper.testInfo(false, testName);
     }
 
     @Test
     public void testErrorMessages() {
-        driver.get(ConfigReader.getProperty("swaglabs_baseurl") + "inventory.html");
-        LoginPage loginPage = new LoginPage(driver);
-        InventoryPage inventoryPage = new InventoryPage(driver);
+        String testName = "Error Messages Test";
+        TestHelper.testInfo(true, testName);
 
-        LOGGER.info("Starting error messages test");
-
-        loginPage.clickOnLogin();
+        LoginPage loginPage = new LoginPage(getDriver(), getWait()).navigateTo().clickOnLoginForFailure();
         assertTrue(loginPage.verifyErrorMessage("Epic sadface: Username is required"),
                 "The expected error message is not found!");
-        loginPage.enterCredentials(ConfigReader.getProperty("user_standard.username"),
-                ConfigReader.getProperty("user_standard.password")).clickOnLogin();
+
+        String username = ConfigReader.getProperty("user_standard.username");
+        String password = ConfigReader.getProperty("user_standard.password");
+
+        InventoryPage inventoryPage = loginPage.enterCredentials(username, password).clickOnLoginForSuccess();
         assertTrue(inventoryPage.isLoaded(), "Inventory page not loaded properly!");
-        PageHelper.scrollToBottom(driver);
-        assertTrue(PageHelper.isScrolledToBottom(driver), "Page did not scroll to the bottom!");
+
+        DriverHelper.scrollToBottom(getDriver());
+        assertTrue(DriverHelper.isScrolledToBottom(getDriver()), "Page did not scroll to the bottom!");
         assertTrue(inventoryPage.verifyFooterText("2025", "Terms of Service"));
+
+        TestHelper.testInfo(false, testName);
     }
 }

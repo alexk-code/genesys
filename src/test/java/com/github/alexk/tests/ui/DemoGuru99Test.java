@@ -17,8 +17,8 @@ import com.github.alexk.utils.DriverHelper;
 public class DemoGuru99Test extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(DemoGuru99Test.class);
 
-    private final String TEST_EMAIL = "test@genesys.com";
-    private final String EXPECTED_ALERT_TEXT = "Successfully";
+    private final String testEmail = "test@genesys.com";
+    private final String expectedAlertText = "Successfully";
 
     @Test
     public void testTextFormatting() {
@@ -34,11 +34,11 @@ public class DemoGuru99Test extends BaseTest {
         demoGuru99Page.navigateTo(url);
         LOGGER.debug("Page was loaded in {}", DriverHelper.getFormattedPageLoadTime(getDriver()));
 
-        demoGuru99Page.findIFrameAndClick().switchToNewTab().closeTab().switchToOriginalTab().enterEmail(TEST_EMAIL)
+        demoGuru99Page.findIFrameAndClick().switchToNewTab().closeTab().switchToOriginalTab().enterEmail(testEmail)
                 .clickOnSubmit();
 
-        assertTrue(demoGuru99Page.verifyAlert(EXPECTED_ALERT_TEXT),
-                String.format("Alert message does NOT contain '%s'", EXPECTED_ALERT_TEXT));
+        assertTrue(demoGuru99Page.verifyAlert(expectedAlertText),
+                String.format("Alert message does NOT contain '%s'", expectedAlertText));
 
         demoGuru99Page.navigateToTooltip();
 

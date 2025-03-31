@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Disabled;
 public class SwaglabsTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(SwaglabsTest.class);
 
-    private final String BACKPACK_ITEM = "Sauce Labs Backpack";
-    private final String FLEECE_JACKET_ITEM = "Sauce Labs Fleece Jacket";
+    private final String backpackItem = "Sauce Labs Backpack";
+    private final String fleeceJacketItem  = "Sauce Labs Fleece Jacket";
 
     @Test
     public void testCompleteCheckout() {
@@ -38,11 +38,11 @@ public class SwaglabsTest extends BaseTest {
         InventoryPage inventoryPage = loginPage.navigateTo().loginAs(username, password);
         assertTrue(inventoryPage.isLoaded(), "Inventory page not loaded properly!");
 
-        inventoryPage.addItemsToCart(BACKPACK_ITEM, FLEECE_JACKET_ITEM);
+        inventoryPage.addItemsToCart(backpackItem, fleeceJacketItem);
         assertTrue(inventoryPage.verifyCartCount("2"), "Cart count verification failed!");
 
         CartPage cartPage = inventoryPage.openCart();
-        assertTrue(cartPage.verifyItemsInCart(BACKPACK_ITEM, FLEECE_JACKET_ITEM), "Items in cart verification failed!");
+        assertTrue(cartPage.verifyItemsInCart(backpackItem, fleeceJacketItem), "Items in cart verification failed!");
 
         CheckoutPage checkoutPage = cartPage.proceedToCheckout();
         

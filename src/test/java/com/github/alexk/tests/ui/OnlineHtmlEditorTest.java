@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Disabled;
 public class OnlineHtmlEditorTest extends BaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(OnlineHtmlEditorTest.class);
 
-    private final String TEST_TEXT = "**Automation** *Test* Example";
+    private final String testText = "**Automation** *Test* Example";
 
     @Test
     public void testTextFormatting() throws InterruptedException {
@@ -23,7 +23,7 @@ public class OnlineHtmlEditorTest extends BaseTest {
 
         LOGGER.info("Starting text formatting test");
 
-        editorPage.navigateTo().enterText(TEST_TEXT);
+        editorPage.navigateTo().enterText(testText);
 
         String editorHtml = editorPage.getTextEditorContent();
 

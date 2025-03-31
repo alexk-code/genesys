@@ -14,8 +14,7 @@ import com.github.alexk.utils.ConfigReader;
 public class OnlineHtmlEditorPage extends BasePage {
     private static final Logger LOGGER = LoggerFactory.getLogger(OnlineHtmlEditorPage.class);
 
-    private By textEditor = By
-            .cssSelector("[aria-label='Rich Text Editor. Editing area: main. Press Alt+0 for help.']");
+    private By textEditor = By.cssSelector("[aria-label^='Rich Text Editor']");
 
     public OnlineHtmlEditorPage(WebDriver driver, WebDriverWait wait) {
         super(driver, wait);
